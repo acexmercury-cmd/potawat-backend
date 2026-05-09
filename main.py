@@ -38,4 +38,7 @@ async def transcribe(file: UploadFile = File(...)):
         tmp_path = tmp.name
 
     try:
-        result = model
+        result = model.transcribe(tmp_path)
+        return {"text": result["text"], "language": result.get("language")}
+    finally:
+        os.unlink(tmp_path)
